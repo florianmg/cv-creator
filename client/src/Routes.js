@@ -7,6 +7,7 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import Landing from "./pages/landing";
 import Dashboard from "./pages/dashboard";
+import Editor from "./pages/editor";
 
 const Routes = () => {
   return (
@@ -14,6 +15,7 @@ const Routes = () => {
       <RouteCredentials path={ROUTES.LOGIN} component={Login} />
       <RouteCredentials path={ROUTES.REGISTER} component={Register} />
       <RouteProtected path={ROUTES.DASHBOARD} component={Dashboard} />
+      <RouteProtected path={ROUTES.EDITOR} component={Editor} />
       <RouteCredentials path={ROUTES.LANDING} component={Landing} />
     </Switch>
   );
