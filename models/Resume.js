@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const ResumeSchema = mongoose.Schema({
-  userId: { type: String },
+  userId: { type: mongoose.Types.ObjectId },
   firstName: { type: String },
   lastName: { type: String },
   phone: { type: Number },
