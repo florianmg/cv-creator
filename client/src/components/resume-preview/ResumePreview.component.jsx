@@ -2,10 +2,13 @@ import React from "react";
 
 import "./ResumePreview.scss";
 
-const ResumePreview = () => {
+const ResumePreview = ({ resumeLocalInfos, setResumeLocalInfos }) => {
+  const { firstName, lastName } = resumeLocalInfos;
   return (
-    <div>
+    <div className="resume-preview">
       <p>ResumePreview component</p>
+      <p>Nom: {lastName}</p>
+      <p>Prénom: {firstName}</p>
     </div>
   );
 };
