@@ -6,6 +6,6 @@ const {
 } = require("../controllers/resume.controller");
 
 router.post("/api/resume", createResume);
-router.get("/api/resume/", getUserResume);
+router.get("/api/resume", getUserResume);
 
 module.exports = router;
