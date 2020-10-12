@@ -1,0 +1,16 @@
+.editor-page {
+  display: flex;
+  flex-direction: row;
+
+  .part {
+    display: flex;
+  }
+  .left {
+    flex-grow: 1;
+    border: 1px solid green;
+  }
+  .right {
+    flex-grow: 2;
+    border: 1px solid red;
+  }
+}
