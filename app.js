@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const authRoutes = require("./routes/auth.routes");
+const resumeRoutes = require("./routes/resume.routes");
 require("dotenv").config();
 const corsConfig = { credentials: true, origin: process.env.FRONT_ENDPOINT };
 
@@ -35,5 +36,6 @@ app.listen(process.env.PORT, () => {
 });
 
 app.use(authRoutes);
+app.use(resumeRoutes);
 
 module.exports = app;
