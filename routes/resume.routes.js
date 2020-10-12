@@ -1,11 +1,11 @@
 const { Router } = require("express");
 const router = Router();
+const {
+  createResume,
+  getUserResume,
+} = require("../controllers/resume.controller");
 
-router.post("/api/resume", (req, res) =>
-  res.status(201).json({ message: "ok for post" })
-);
-router.get("/api/resume/:id", (req, res) =>
-  res.status(200).json({ message: "ok for get" })
-);
+router.post("/api/resume", createResume);
+router.get("/api/resume/", getUserResume);
 
 module.exports = router;
