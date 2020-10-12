@@ -18,11 +18,13 @@ module.exports.createResume = async (req, res) => {
 
 module.exports.getUserResume = async (req, res) => {
   const token = req.cookies.jwt;
+
   try {
     const verification = await jwt.verify(token, process.env.SECRET_JWT);
     if (!verification) new Error("wrong token");
-    const userResume = Resume.findOne({ userId: verification._id });
-    if (!userResume) new Error("No resume found");
+    const userResume = await Resume.findOne({ userId: verification._id });
+    console.log(userResume);
+    if (!userResume) throw Error("No resume found");
     return res.status(200).json({ userResume });
   } catch (err) {
     return res.status(404).json({ status: 404, message: err.message });
