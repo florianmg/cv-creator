@@ -6,4 +6,5 @@ export const ROUTES = {
   REGISTER: "/register",
   DASHBOARD: "/dashboard",
   LOGOUT: "/logout",
+  EDITOR: "/editor",
 };

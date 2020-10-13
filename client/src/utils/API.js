@@ -58,3 +58,13 @@ export async function isAuthenticated() {
     return { data: err.response.data, status: err.response.status };
   }
 }
+
+export async function getUserResume() {
+  try {
+    const result = await API.get("/resume");
+    console.log(result);
+    return { data: result.data, status: result.status };
+  } catch (err) {
+    return { data: err.response.data, status: err.response.status };
+  }
+}
