@@ -11,6 +11,43 @@ const Editor = () => {
     lastName: "",
     phone: "",
     email: "",
+    location: "",
+    jobTitle: "",
+    experiences: [
+      {
+        companyName: "happy neuron",
+        jobTitle: "",
+        location: "",
+        startDate: "",
+        endDate: "",
+        position: 0,
+      },
+    ],
+    formations: [
+      {
+        degreeName: "",
+        schoolName: "",
+        location: "",
+        startDate: "",
+        endDate: "",
+        position: 0,
+      },
+    ],
+    languages: [
+      {
+        name: "",
+        level: 0,
+        position: 0,
+      },
+    ],
+    skills: [
+      {
+        name: "",
+        level: 0,
+        position: 0,
+      },
+    ],
+    interest: [{ name: "", position: 0 }],
   };
   const [resumeLocalInfos, setResumeLocalInfos] = useState(initialResumeInfos);
 
