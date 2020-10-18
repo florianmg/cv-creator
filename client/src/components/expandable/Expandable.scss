@@ -1,0 +1,19 @@
+.expandable {
+  border: 1px solid green;
+  display: flex;
+  flex-direction: column;
+  &:hover {
+    cursor: pointer;
+  }
+  &__title {
+    border: 1px solid yellow;
+  }
+  &__content {
+    display: none;
+    border: 1px solid tomato;
+    height: 0;
+    &--open {
+      height:auto;
+    }
+  }
+}
