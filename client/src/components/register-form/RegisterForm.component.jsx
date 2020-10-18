@@ -27,7 +27,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <div>
+    <div className="register-form">
       <form onSubmit={handleFormSubmit}>
         {formErrors && <p>{formErrors.errors.email}</p>}
         <Input
@@ -50,7 +50,7 @@ const RegisterForm = () => {
           }
           required={true}
         />
-        <Button text="Se connecter" />
+        <Button text="S'inscrire" />
       </form>
     </div>
   );

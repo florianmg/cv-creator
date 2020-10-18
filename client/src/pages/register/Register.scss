@@ -1,0 +1,10 @@
+@import "../../variables.scss";
+
+.register-page {
+  width: 100vw;
+  height: $full-height-page;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
