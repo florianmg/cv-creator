@@ -4,7 +4,7 @@ import Expandable from "../expandable";
 
 import "./FormationExpandable.scss";
 
-const FormationExpandable = ({ formation, updateInput }) => {
+const FormationExpandable = ({ formation, updateInput, type }) => {
   const {
     degreeName,
     schoolName,
@@ -22,7 +22,7 @@ const FormationExpandable = ({ formation, updateInput }) => {
         name="schoolName"
         dataAttribute={position}
         value={schoolName}
-        onChange={(e) => updateInput(e, "formations")}
+        onChange={(e) => updateInput(e, type)}
       />
       <Input
         type="text"
@@ -31,7 +31,7 @@ const FormationExpandable = ({ formation, updateInput }) => {
         name="degreeName"
         dataAttribute={position}
         value={degreeName}
-        onChange={(e) => updateInput(e, "formations")}
+        onChange={(e) => updateInput(e, type)}
       />
       <Input
         type="text"
@@ -40,7 +40,7 @@ const FormationExpandable = ({ formation, updateInput }) => {
         name="location"
         dataAttribute={position}
         value={location}
-        onChange={(e) => updateInput(e, "formations")}
+        onChange={(e) => updateInput(e, type)}
       />
       <Input
         type="date"
@@ -49,7 +49,7 @@ const FormationExpandable = ({ formation, updateInput }) => {
         name="startDate"
         dataAttribute={startDate}
         value={startDate}
-        onChange={(e) => updateInput(e, "formations")}
+        onChange={(e) => updateInput(e, type)}
       />
       <Input
         type="date"
@@ -58,7 +58,7 @@ const FormationExpandable = ({ formation, updateInput }) => {
         name="endDate"
         dataAttribute={endDate}
         value={endDate}
-        onChange={(e) => updateInput(e, "formations")}
+        onChange={(e) => updateInput(e, type)}
       />
     </Expandable>
   );
