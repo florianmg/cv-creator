@@ -4,7 +4,7 @@ import Expandable from "../expandable";
 
 import "./ExperienceExpandable.scss";
 
-const ExperienceExpandable = ({ experience, updateInput }) => {
+const ExperienceExpandable = ({ experience, updateInput, type }) => {
   const {
     companyName,
     jobTitle,
@@ -22,7 +22,7 @@ const ExperienceExpandable = ({ experience, updateInput }) => {
         name="companyName"
         dataAttribute={position}
         value={companyName}
-        onChange={(e) => updateInput(e, "experiences")}
+        onChange={(e) => updateInput(e, type)}
       />
       <Input
         type="text"
@@ -31,7 +31,7 @@ const ExperienceExpandable = ({ experience, updateInput }) => {
         name="jobTitle"
         dataAttribute={position}
         value={jobTitle}
-        onChange={(e) => updateInput(e, "experiences")}
+        onChange={(e) => updateInput(e, type)}
       />
       <Input
         type="text"
@@ -40,7 +40,7 @@ const ExperienceExpandable = ({ experience, updateInput }) => {
         name="location"
         dataAttribute={position}
         value={location}
-        onChange={(e) => updateInput(e, "experiences")}
+        onChange={(e) => updateInput(e, type)}
       />
       <Input
         type="date"
@@ -49,7 +49,7 @@ const ExperienceExpandable = ({ experience, updateInput }) => {
         name="startDate"
         dataAttribute={startDate}
         value={startDate}
-        onChange={(e) => updateInput(e, "experiences")}
+        onChange={(e) => updateInput(e, type)}
       />
       <Input
         type="date"
@@ -58,7 +58,7 @@ const ExperienceExpandable = ({ experience, updateInput }) => {
         name="endDate"
         dataAttribute={endDate}
         value={endDate}
-        onChange={(e) => updateInput(e, "experiences")}
+        onChange={(e) => updateInput(e, type)}
       />
     </Expandable>
   );
