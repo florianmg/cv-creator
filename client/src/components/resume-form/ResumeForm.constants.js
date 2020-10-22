@@ -1,0 +1,7 @@
+export const TYPES = {
+  EXPERIENCE: 0,
+  FORMATION: 1,
+  LANGUAGE: 2,
+  SKILLS: 3,
+  INTERESTS: 4,
+};
