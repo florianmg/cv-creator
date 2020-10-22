@@ -5,20 +5,48 @@ import Button from "../button";
 import ExperienceExpandable from "../experience-expandable";
 import FormationExpandable from "../formation-expandable";
 
+import { TYPES } from "./ResumeForm.constants";
+
 import "./ResumeForm.scss";
 
 const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
+  let initialEmptyExperience = {
+    companyName: "",
+    jobTitle: "",
+    location: "",
+    startDate: "",
+    endDate: "",
+    position: 0,
+  };
+
+  let initialEmptyFormation = {
+    degreeName: "",
+    schoolName: "",
+    location: "",
+    startDate: "",
+    endDate: "",
+    position: 0,
+  };
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
     console.log("on form submit => ", resumeLocalInfos);
   };
 
-  const handleUpdateNestedInput = (e, type) => {
-    console.log("passe la ");
-    let arrayToUpdate;
+  const handleTypeSelection = (type) => {
+    switch (type) {
+      case TYPES.EXPERIENCE:
+        return resumeLocalInfos.experiences;
+      case TYPES.FORMATION:
+        return resumeLocalInfos.formations;
+      default:
+        break;
+    }
+  };
+
+  const handleUpdateNestedInput = (e, types) => {
+    let arrayToUpdate = handleTypeSelection(types);
     const { value, dataset, name } = e.target;
-    if (type === "experiences") arrayToUpdate = resumeLocalInfos.experiences;
-    if (type === "formations") arrayToUpdate = resumeLocalInfos.formations;
 
     const itemToUpdate =
       arrayToUpdate[
@@ -28,12 +56,41 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
       ];
 
     itemToUpdate[name] = value;
-
+    console.log(resumeLocalInfos.type);
     setResumeLocalInfos({
       ...resumeLocalInfos,
       type: arrayToUpdate,
     });
   };
+
+  const handleNewEmptyExperience = () => {
+    initialEmptyExperience.position = resumeLocalInfos.experiences.length;
+
+    const addedEmptyExperience = [
+      ...resumeLocalInfos.experiences,
+      initialEmptyExperience,
+    ];
+
+    setResumeLocalInfos({
+      ...resumeLocalInfos,
+      experiences: addedEmptyExperience,
+    });
+  };
+
+  const handleNewEmptyFormation = () => {
+    initialEmptyFormation.position = resumeLocalInfos.formations.length;
+
+    const addedEmptyFormation = [
+      ...resumeLocalInfos.formations,
+      initialEmptyFormation,
+    ];
+
+    setResumeLocalInfos({
+      ...resumeLocalInfos,
+      formations: addedEmptyFormation,
+    });
+  };
+
   return (
     <div className="resume-form">
       <form onSubmit={handleFormSubmit}>
@@ -43,8 +100,10 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
             experience={e}
             key={i}
             updateInput={handleUpdateNestedInput}
+            type={TYPES.EXPERIENCE}
           />
         ))}
+        <p onClick={handleNewEmptyExperience}>Ajouter une experience</p>
 
         <p>Formations :</p>
         {resumeLocalInfos.formations.map((e, i) => (
@@ -52,8 +111,10 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
             formation={e}
             key={i}
             updateInput={handleUpdateNestedInput}
+            type={TYPES.FORMATION}
           />
         ))}
+        <p onClick={handleNewEmptyFormation}>Ajouter une formation</p>
         <Input
           type="text"
           label="Nom"
