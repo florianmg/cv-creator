@@ -4,6 +4,7 @@ import Input from "../input";
 import Button from "../button";
 import ExperienceExpandable from "../experience-expandable";
 import FormationExpandable from "../formation-expandable";
+import LevelExpandable from "../level-expandable";
 
 import { TYPES } from "./ResumeForm.constants";
 
@@ -18,13 +19,22 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
     endDate: "",
     position: 0,
   };
-
   let initialEmptyFormation = {
     degreeName: "",
     schoolName: "",
     location: "",
     startDate: "",
     endDate: "",
+    position: 0,
+  };
+  let initialEmptyLanguageAndSkill = {
+    name: "",
+    level: [1, 0, 0, 0, 0],
+    position: 0,
+  };
+  let initialEmptyInterest = {
+    name: "",
+    level: [1, 0, 0, 0, 0],
     position: 0,
   };
 
@@ -39,6 +49,12 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
         return resumeLocalInfos.experiences;
       case TYPES.FORMATION:
         return resumeLocalInfos.formations;
+      case TYPES.LANGUAGE:
+        return resumeLocalInfos.languages;
+      case TYPES.SKILLS:
+        return resumeLocalInfos.skills;
+      case TYPES.INTERESTS:
+        return resumeLocalInfos.interests;
       default:
         break;
     }
@@ -46,7 +62,8 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
 
   const handleUpdateNestedInput = (e, types) => {
     let arrayToUpdate = handleTypeSelection(types);
-    const { value, dataset, name } = e.target;
+
+    const { value, dataset, name } = e.target ? e.target : e;
 
     const itemToUpdate =
       arrayToUpdate[
@@ -56,7 +73,7 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
       ];
 
     itemToUpdate[name] = value;
-    console.log(resumeLocalInfos.type);
+
     setResumeLocalInfos({
       ...resumeLocalInfos,
       type: arrayToUpdate,
@@ -91,9 +108,59 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
     });
   };
 
+  const handleNewEmptyLanguage = () => {
+    initialEmptyLanguageAndSkill.position =
+      resumeLocalInfos.languages.length + 1;
+
+    const addedEmptyFormation = [
+      ...resumeLocalInfos.languages,
+      initialEmptyLanguageAndSkill,
+    ];
+
+    setResumeLocalInfos({
+      ...resumeLocalInfos,
+      languages: addedEmptyFormation,
+    });
+  };
+
+  const handleNewEmptySkill = () => {
+    initialEmptyLanguageAndSkill.position = resumeLocalInfos.skills.length + 1;
+
+    const addedEmptyFormation = [
+      ...resumeLocalInfos.skills,
+      initialEmptyLanguageAndSkill,
+    ];
+
+    setResumeLocalInfos({
+      ...resumeLocalInfos,
+      skills: addedEmptyFormation,
+    });
+  };
+
   return (
     <div className="resume-form">
       <form onSubmit={handleFormSubmit}>
+        <p>Skills: </p>
+        {resumeLocalInfos.skills.map((e, i) => (
+          <LevelExpandable
+            language={e}
+            key={i}
+            updateInput={handleUpdateNestedInput}
+            type={TYPES.SKILLS}
+          />
+        ))}
+        <p onClick={handleNewEmptySkill}>Ajouter un skill</p>
+        <p>Langues :</p>
+        {resumeLocalInfos.languages.map((e, i) => (
+          <LevelExpandable
+            language={e}
+            key={i}
+            updateInput={handleUpdateNestedInput}
+            type={TYPES.LANGUAGE}
+          />
+        ))}
+        <p onClick={handleNewEmptyLanguage}>Ajouter une Langue</p>
+
         <p>Experiences :</p>
         {resumeLocalInfos.experiences.map((e, i) => (
           <ExperienceExpandable

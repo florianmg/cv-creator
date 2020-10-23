@@ -35,16 +35,26 @@ const Editor = () => {
     ],
     languages: [
       {
-        name: "",
-        level: 0,
+        name: "Francais",
+        level: [1, 1, 1, 1, 0],
         position: 0,
+      },
+      {
+        name: "Anglais",
+        level: [1, 1, 1, 0, 0],
+        position: 1,
       },
     ],
     skills: [
       {
-        name: "",
-        level: 0,
-        position: 0,
+        name: "Word",
+        level: [1, 1, 1, 0, 0],
+        position: 1,
+      },
+      {
+        name: "Excel",
+        level: [1, 1, 0, 0, 0],
+        position: 2,
       },
     ],
     interest: [{ name: "", position: 0 }],

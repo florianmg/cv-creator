@@ -1,0 +1,17 @@
+.level-selector {
+  display: flex;
+
+  &__item {
+    width: 15px;
+    height: 15px;
+    border: 2px solid red;
+    margin: 5px;
+    border-radius: 100%;
+    &.--selected {
+      background-color: red;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
