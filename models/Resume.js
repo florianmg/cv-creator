@@ -15,6 +15,7 @@ const ResumeSchema = mongoose.Schema({
       location: { type: String },
       startDate: { type: Date },
       endDate: { type: Date },
+      position: { type: Number },
     },
   ],
   formations: [
@@ -24,21 +25,24 @@ const ResumeSchema = mongoose.Schema({
       location: { type: String },
       startDate: { type: Date },
       endDate: { type: Date },
+      position: { type: Number },
     },
   ],
   languages: [
     {
       name: { type: String },
       level: { type: Number },
+      position: { type: Number },
     },
   ],
   skills: [
     {
       name: { type: String },
       level: { type: Number },
+      position: { type: Number },
     },
   ],
-  interests: [{ name: { type: String } }],
+  interests: [{ name: { type: String }, position: { type: Number } }],
 });
 
 const Resume = mongoose.model("resume", ResumeSchema);
