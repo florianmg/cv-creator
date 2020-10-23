@@ -57,7 +57,10 @@ const Editor = () => {
         position: 2,
       },
     ],
-    interest: [{ name: "", position: 0 }],
+    interests: [
+      { name: "Jeux-Vidéos", position: 0 },
+      { name: "Lecture", position: 1 },
+    ],
   };
   const [resumeLocalInfos, setResumeLocalInfos] = useState(initialResumeInfos);
 

@@ -5,6 +5,7 @@ import Button from "../button";
 import ExperienceExpandable from "../experience-expandable";
 import FormationExpandable from "../formation-expandable";
 import LevelExpandable from "../level-expandable";
+import InterestExpandable from "../interest-expandable";
 
 import { TYPES } from "./ResumeForm.constants";
 
@@ -34,7 +35,6 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
   };
   let initialEmptyInterest = {
     name: "",
-    level: [1, 0, 0, 0, 0],
     position: 0,
   };
 
@@ -58,6 +58,10 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
       default:
         break;
     }
+  };
+
+  const handleUpdateInterests = (newInterests) => {
+    setResumeLocalInfos({ ...resumeLocalInfos, interests: newInterests });
   };
 
   const handleUpdateNestedInput = (e, types) => {
@@ -140,6 +144,12 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
   return (
     <div className="resume-form">
       <form onSubmit={handleFormSubmit}>
+        <InterestExpandable
+          interests={resumeLocalInfos.interests}
+          updateInput={handleUpdateInterests}
+          type={TYPES.INTERESTS}
+        />
+        <hr />
         <p>Skills: </p>
         {resumeLocalInfos.skills.map((e, i) => (
           <LevelExpandable
@@ -150,6 +160,7 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
           />
         ))}
         <p onClick={handleNewEmptySkill}>Ajouter un skill</p>
+        <hr />
         <p>Langues :</p>
         {resumeLocalInfos.languages.map((e, i) => (
           <LevelExpandable
@@ -160,7 +171,7 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
           />
         ))}
         <p onClick={handleNewEmptyLanguage}>Ajouter une Langue</p>
-
+        <hr />
         <p>Experiences :</p>
         {resumeLocalInfos.experiences.map((e, i) => (
           <ExperienceExpandable
@@ -171,7 +182,7 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
           />
         ))}
         <p onClick={handleNewEmptyExperience}>Ajouter une experience</p>
-
+        <hr />
         <p>Formations :</p>
         {resumeLocalInfos.formations.map((e, i) => (
           <FormationExpandable
@@ -182,6 +193,7 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
           />
         ))}
         <p onClick={handleNewEmptyFormation}>Ajouter une formation</p>
+        <hr />
         <Input
           type="text"
           label="Nom"
