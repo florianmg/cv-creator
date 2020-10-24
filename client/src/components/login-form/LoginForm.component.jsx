@@ -27,7 +27,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div>
+    <div className="login-form">
       <form onSubmit={handleFormSubmit}>
         {formErrors && <p>{formErrors.errors.email}</p>}
         {formErrors && <p>{formErrors.errors.password}</p>}
@@ -51,7 +51,7 @@ const LoginForm = () => {
           }
           required={true}
         />
-        <Button text="S'inscrire" />
+        <Button text="Se connecter" />
       </form>
     </div>
   );

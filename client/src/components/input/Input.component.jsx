@@ -10,6 +10,8 @@ const Input = ({
   onChange,
   id,
   required = false,
+  dataAttribute,
+  name
 }) => {
   return (
     <div className="input">
@@ -26,6 +28,8 @@ const Input = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        data-attribute={dataAttribute}
+        name={name}
       />
     </div>
   );

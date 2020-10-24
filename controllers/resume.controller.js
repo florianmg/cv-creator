@@ -23,7 +23,7 @@ module.exports.getUserResume = async (req, res) => {
     const verification = await jwt.verify(token, process.env.SECRET_JWT);
     if (!verification) new Error("wrong token");
     const userResume = await Resume.findOne({ userId: verification._id });
-    console.log(userResume);
+    
     if (!userResume) throw Error("No resume found");
     return res.status(200).json({ userResume });
   } catch (err) {
