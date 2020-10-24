@@ -32,7 +32,11 @@ const InterestExpandable = ({ interests, updateInput }) => {
 
   const refreshDefaultList = useCallback(() => {
     const refreshedDefaultList = initialDefaultList.filter((item) => {
-      return selectedList.findIndex((e) => e.name === item) === -1;
+      return (
+        selectedList.findIndex(
+          (e) => e.name.toLowerCase() === item.toLowerCase()
+        ) === -1
+      );
     });
     setDefaultList(refreshedDefaultList);
   }, [initialDefaultList, selectedList]);
@@ -59,7 +63,6 @@ const InterestExpandable = ({ interests, updateInput }) => {
   }, [inputValue, initialDefaultList]);
 
   useEffect(() => {
-    console.log("useEffect 2.");
     updateInput(selectedList);
     refreshDefaultList();
   }, [selectedList, refreshDefaultList, updateInput]);

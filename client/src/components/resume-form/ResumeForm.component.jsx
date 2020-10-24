@@ -33,10 +33,6 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
     level: [1, 0, 0, 0, 0],
     position: 0,
   };
-  let initialEmptyInterest = {
-    name: "",
-    position: 0,
-  };
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -46,15 +42,35 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
   const handleTypeSelection = (type) => {
     switch (type) {
       case TYPES.EXPERIENCE:
-        return resumeLocalInfos.experiences;
+        return {
+          content: resumeLocalInfos.experiences,
+          name: "experiences",
+          initialEmpty: initialEmptyExperience,
+        };
       case TYPES.FORMATION:
-        return resumeLocalInfos.formations;
+        return {
+          content: resumeLocalInfos.formations,
+          name: "formations",
+          initialEmpty: initialEmptyFormation,
+        };
       case TYPES.LANGUAGE:
-        return resumeLocalInfos.languages;
+        return {
+          content: resumeLocalInfos.languages,
+          name: "languages",
+          initialEmpty: initialEmptyLanguageAndSkill,
+        };
       case TYPES.SKILLS:
-        return resumeLocalInfos.skills;
+        return {
+          content: resumeLocalInfos.skills,
+          name: "skills",
+          initialEmpty: initialEmptyLanguageAndSkill,
+        };
       case TYPES.INTERESTS:
-        return resumeLocalInfos.interests;
+        return {
+          content: resumeLocalInfos.interests,
+          name: "interests",
+          initialEmpty: null,
+        };
       default:
         break;
     }
@@ -65,13 +81,13 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
   };
 
   const handleUpdateNestedInput = (e, types) => {
-    let arrayToUpdate = handleTypeSelection(types);
+    let { content } = handleTypeSelection(types);
 
     const { value, dataset, name } = e.target ? e.target : e;
 
     const itemToUpdate =
-      arrayToUpdate[
-        arrayToUpdate.findIndex(
+      content[
+        content.findIndex(
           (e) => parseInt(e.position, 10) === parseInt(dataset.attribute, 10)
         )
       ];
@@ -80,64 +96,38 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
 
     setResumeLocalInfos({
       ...resumeLocalInfos,
-      type: arrayToUpdate,
+      type: content,
     });
   };
 
-  const handleNewEmptyExperience = () => {
-    initialEmptyExperience.position = resumeLocalInfos.experiences.length;
+  const refreshPositionsValues = (arrayOfItems) => {
+    let positionValue = 1;
 
-    const addedEmptyExperience = [
-      ...resumeLocalInfos.experiences,
-      initialEmptyExperience,
-    ];
-
-    setResumeLocalInfos({
-      ...resumeLocalInfos,
-      experiences: addedEmptyExperience,
+    arrayOfItems.forEach((item) => {
+      item.position = positionValue;
+      positionValue++;
     });
+
+    return arrayOfItems;
   };
 
-  const handleNewEmptyFormation = () => {
-    initialEmptyFormation.position = resumeLocalInfos.formations.length;
+  const handleNewEmpty = (type) => {
+    const { name, initialEmpty } = handleTypeSelection(type);
 
-    const addedEmptyFormation = [
-      ...resumeLocalInfos.formations,
-      initialEmptyFormation,
-    ];
+    initialEmpty.position = resumeLocalInfos[name].length + 1;
+    const withNewEmpty = [...resumeLocalInfos[name], initialEmpty];
 
-    setResumeLocalInfos({
-      ...resumeLocalInfos,
-      formations: addedEmptyFormation,
-    });
+    setResumeLocalInfos({ ...resumeLocalInfos, [name]: withNewEmpty });
   };
 
-  const handleNewEmptyLanguage = () => {
-    initialEmptyLanguageAndSkill.position =
-      resumeLocalInfos.languages.length + 1;
+  const handleRemoveExpandable = (itemPosition, type) => {
+    const { content, name } = handleTypeSelection(type);
 
-    const addedEmptyFormation = [
-      ...resumeLocalInfos.languages,
-      initialEmptyLanguageAndSkill,
-    ];
+    let newArray = content.filter((item) => item.position !== itemPosition);
 
     setResumeLocalInfos({
       ...resumeLocalInfos,
-      languages: addedEmptyFormation,
-    });
-  };
-
-  const handleNewEmptySkill = () => {
-    initialEmptyLanguageAndSkill.position = resumeLocalInfos.skills.length + 1;
-
-    const addedEmptyFormation = [
-      ...resumeLocalInfos.skills,
-      initialEmptyLanguageAndSkill,
-    ];
-
-    setResumeLocalInfos({
-      ...resumeLocalInfos,
-      skills: addedEmptyFormation,
+      [name]: refreshPositionsValues(newArray),
     });
   };
 
@@ -146,7 +136,7 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
       <form onSubmit={handleFormSubmit}>
         <InterestExpandable
           interests={resumeLocalInfos.interests}
-          updateInput={handleUpdateInterests}
+          updateInput={() => handleUpdateInterests}
           type={TYPES.INTERESTS}
         />
         <hr />
@@ -157,9 +147,10 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
             key={i}
             updateInput={handleUpdateNestedInput}
             type={TYPES.SKILLS}
+            onRemove={handleRemoveExpandable}
           />
         ))}
-        <p onClick={handleNewEmptySkill}>Ajouter un skill</p>
+        <p onClick={() => handleNewEmpty(TYPES.SKILLS)}>Ajouter un skill</p>
         <hr />
         <p>Langues :</p>
         {resumeLocalInfos.languages.map((e, i) => (
@@ -168,9 +159,10 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
             key={i}
             updateInput={handleUpdateNestedInput}
             type={TYPES.LANGUAGE}
+            onRemove={handleRemoveExpandable}
           />
         ))}
-        <p onClick={handleNewEmptyLanguage}>Ajouter une Langue</p>
+        <p onClick={() => handleNewEmpty(TYPES.LANGUAGE)}>Ajouter une Langue</p>
         <hr />
         <p>Experiences :</p>
         {resumeLocalInfos.experiences.map((e, i) => (
@@ -179,9 +171,12 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
             key={i}
             updateInput={handleUpdateNestedInput}
             type={TYPES.EXPERIENCE}
+            onRemove={handleRemoveExpandable}
           />
         ))}
-        <p onClick={handleNewEmptyExperience}>Ajouter une experience</p>
+        <p onClick={() => handleNewEmpty(TYPES.EXPERIENCE)}>
+          Ajouter une experience
+        </p>
         <hr />
         <p>Formations :</p>
         {resumeLocalInfos.formations.map((e, i) => (
@@ -190,9 +185,12 @@ const ResumeForm = ({ resumeLocalInfos, setResumeLocalInfos }) => {
             key={i}
             updateInput={handleUpdateNestedInput}
             type={TYPES.FORMATION}
+            onRemove={handleRemoveExpandable}
           />
         ))}
-        <p onClick={handleNewEmptyFormation}>Ajouter une formation</p>
+        <p onClick={() => handleNewEmpty(TYPES.FORMATION)}>
+          Ajouter une formation
+        </p>
         <hr />
         <Input
           type="text"

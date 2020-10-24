@@ -4,7 +4,7 @@ import Expandable from "../expandable";
 
 import "./FormationExpandable.scss";
 
-const FormationExpandable = ({ formation, updateInput, type }) => {
+const FormationExpandable = ({ formation, updateInput, type, onRemove }) => {
   const {
     degreeName,
     schoolName,
@@ -13,8 +13,16 @@ const FormationExpandable = ({ formation, updateInput, type }) => {
     position,
     location,
   } = formation;
+
+  const handleRemoveExpandable = () => {
+    onRemove(position, type);
+  };
+
   return (
-    <Expandable title={schoolName ? schoolName : "Nom de l'école"}>
+    <Expandable
+      title={schoolName ? schoolName : "Nom de l'école"}
+      remove={() => handleRemoveExpandable()}
+    >
       <Input
         type="text"
         id="schoolName"

@@ -8,12 +8,18 @@ import { TYPES } from "../resume-form/ResumeForm.constants";
 
 import "./LevelExpandable.scss";
 
-const LevelExpandable = ({ language, updateInput, type }) => {
+const LevelExpandable = ({ language, updateInput, type, onRemove }) => {
   const { name, level, position } = language;
   const defaultTitle = type === TYPES.SKILLS ? "Compétence" : "Langue";
 
+  const handleRemoveExpandable = () => {
+    onRemove(position, type);
+  };
   return (
-    <Expandable title={name ? name : defaultTitle}>
+    <Expandable
+      title={name ? name : defaultTitle}
+      remove={() => handleRemoveExpandable()}
+    >
       <Input
         type="text"
         id="name"
