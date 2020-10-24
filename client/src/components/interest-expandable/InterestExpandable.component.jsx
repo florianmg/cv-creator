@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import Input from "../input";
 import Expandable from "../expandable";
 
 import "./InterestExpandable.scss";
 
-const InterestExpandable = ({ interests, updateInput, type }) => {
-  const initialDefaultList = [
-    "Lecture",
-    "Sport",
-    "Voyages",
-    "Broderie",
-    "Jeux-Vidéos",
-  ];
+const InterestExpandable = ({ interests, updateInput }) => {
+  const [initialDefaultList, setInitialDefaultList] = useState([]);
   const [defaultList, setDefaultList] = useState(initialDefaultList);
   const [selectedList, setSelectedList] = useState(interests);
   const [inputValue, setInputValue] = useState("");
@@ -36,12 +30,22 @@ const InterestExpandable = ({ interests, updateInput, type }) => {
     setSelectedList(newSelectedList);
   };
 
-  const refreshDefaultList = () => {
+  const refreshDefaultList = useCallback(() => {
     const refreshedDefaultList = initialDefaultList.filter((item) => {
       return selectedList.findIndex((e) => e.name === item) === -1;
     });
     setDefaultList(refreshedDefaultList);
-  };
+  }, [initialDefaultList, selectedList]);
+
+  useEffect(() => {
+    setInitialDefaultList([
+      "Lecture",
+      "Sport",
+      "Voyages",
+      "Broderie",
+      "Jeux-Vidéos",
+    ]);
+  }, []);
 
   useEffect(() => {
     if (inputValue === "") {
@@ -52,12 +56,13 @@ const InterestExpandable = ({ interests, updateInput, type }) => {
       item.toLowerCase().includes(inputValue.toLowerCase())
     );
     setDefaultList(filteredList);
-  }, [inputValue]);
+  }, [inputValue, initialDefaultList]);
 
   useEffect(() => {
+    console.log("useEffect 2.");
     updateInput(selectedList);
     refreshDefaultList();
-  }, [selectedList]);
+  }, [selectedList, refreshDefaultList, updateInput]);
 
   return (
     <div className="interest-expandable">
